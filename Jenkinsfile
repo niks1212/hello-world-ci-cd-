@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    triggers {
+        githubPush()   // Run pipeline on git push
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/<your-username>/hello-world-ci-cd.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                sh 'npm start'
+            }
+        }
+    }
+}
+
